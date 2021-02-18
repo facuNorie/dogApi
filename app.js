@@ -18,11 +18,18 @@ const getDog = breed => {
     fetch(`https://dog.ceo/api/breed/${Breed}/images/random`)
         .then(response=>response.json())
         .then(dog=>{
+            if(dog.status == "error"){
+                let h1 = document.createElement("H1");
+                h1.textContent = `Error ${dog.code} breed not found!`;
+                document.querySelector(".response").appendChild(h1);
+                return;
+            }
             let div = document.querySelector(".response");
             let imgDog = document.createElement("IMG");
             imgDog.src = dog.message;
             imgDog.classList.add("imgDog");
             div.appendChild(imgDog);
+            
         });
     document.querySelector(".inputSearch").value = "";
 }
